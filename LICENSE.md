@@ -135,8 +135,7 @@ The User is expressly prohibited from:
 For licensing inquiries, commercial partnerships, or permissions, contact:
 
 ViitoJooj Legal Department  
-Email: legal@viitojooj.com  
-Website: https://www.viitojooj.com
+Email: joaovitor819oqueres@gmail.com Website: https://www.viitojooj.com.br
 
 ---
 
