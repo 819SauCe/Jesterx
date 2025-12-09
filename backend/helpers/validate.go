@@ -58,11 +58,7 @@ func ValidateEmail(email string) error {
 func EmailExists(ctx context.Context, db *sql.DB, email string) (bool, error) {
 	var exists bool
 
-	err := db.QueryRowContext(
-		ctx,
-		"SELECT EXISTS (SELECT 1 FROM users WHERE email = $1)",
-		email,
-	).Scan(&exists)
+	err := db.QueryRowContext(ctx, "SELECT EXISTS (SELECT 1 FROM users WHERE email = $1)", email).Scan(&exists)
 
 	if err != nil {
 		return false, err

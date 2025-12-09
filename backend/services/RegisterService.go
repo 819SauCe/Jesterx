@@ -14,7 +14,7 @@ import (
 func RegisterService(c *gin.Context) {
 	tenantPageID := c.GetHeader("X-Tenant-Page-Id")
 	if tenantPageID == "" {
-		c.JSON(400, gin.H{"success": false, "error": "Tenant não informado"})
+		c.JSON(400, gin.H{"success": false, "error": "Tenant not informed."})
 		return
 	}
 
@@ -23,7 +23,7 @@ func RegisterService(c *gin.Context) {
 
 	if err != nil {
 		if err == sql.ErrNoRows {
-			c.JSON(404, gin.H{"success": false, "error": "Tenant não encontrado"})
+			c.JSON(404, gin.H{"success": false, "error": "Tenant not found"})
 			return
 		}
 		c.JSON(500, gin.H{"success": false, "error": "Database error"})
@@ -52,7 +52,7 @@ func RegisterService(c *gin.Context) {
 		return
 	}
 	if exists {
-		c.JSON(400, gin.H{"success": false, "error": "Email já cadastrado"})
+		c.JSON(400, gin.H{"success": false, "error": "Email already registered"})
 		return
 	}
 
@@ -105,7 +105,7 @@ func RegisterService(c *gin.Context) {
 
 	token, err := helpers.GenerateToken(user)
 	if err != nil {
-		log.Println("erro ao gerar token:", err)
+		log.Println("Error generating token.:", err)
 		c.JSON(500, gin.H{"success": false, "error": "Internal error"})
 		return
 	}
@@ -121,7 +121,7 @@ func RegisterService(c *gin.Context) {
 
 	c.JSON(200, responses.UserRegisterResponse{
 		Sucess:  "ok",
-		Message: "Registro efetuado com sucesso",
+		Message: "Registration successful.",
 		Data: responses.UserDataRegister{
 			Id:         user.Id,
 			ProfileImg: user.Profile_img,

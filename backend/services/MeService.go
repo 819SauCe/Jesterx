@@ -12,7 +12,7 @@ import (
 func MeService(c *gin.Context) {
 	tenantPageID := c.GetHeader("X-Tenant-Page-Id")
 	if tenantPageID == "" {
-		c.JSON(400, gin.H{"success": false, "error": "Tenant não informado"})
+		c.JSON(400, gin.H{"success": false, "error": "Tenant not informed."})
 		return
 	}
 
@@ -21,7 +21,7 @@ func MeService(c *gin.Context) {
 
 	if err != nil {
 		if err == sql.ErrNoRows {
-			c.JSON(404, gin.H{"success": false, "error": "Tenant não encontrado"})
+			c.JSON(404, gin.H{"success": false, "error": "Tenant not found"})
 			return
 		}
 		c.JSON(500, gin.H{"success": false, "error": "Database error"})

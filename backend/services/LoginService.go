@@ -13,7 +13,7 @@ import (
 func LoginService(c *gin.Context) {
 	tenantPageID := c.GetHeader("X-Tenant-Page-Id")
 	if tenantPageID == "" {
-		c.JSON(400, gin.H{"success": false, "error": "Tenant não informado"})
+		c.JSON(400, gin.H{"success": false, "error": "Tenant not informed."})
 		return
 	}
 
@@ -22,7 +22,7 @@ func LoginService(c *gin.Context) {
 
 	if err != nil {
 		if err == sql.ErrNoRows {
-			c.JSON(404, gin.H{"success": false, "error": "Tenant não encontrado"})
+			c.JSON(404, gin.H{"success": false, "error": "Tenant not found"})
 			return
 		}
 		c.JSON(500, gin.H{"success": false, "error": "Database error"})
@@ -101,15 +101,12 @@ func LoginService(c *gin.Context) {
 	}
 
 	if !hasAccess {
-		c.JSON(403, gin.H{"success": false, "error": "Usuário não pertence a este tenant"})
+		c.JSON(403, gin.H{"success": false, "error": "User does not belong to this tenant."})
 		return
 	}
 
 	if user.Role == "" {
-		c.JSON(403, gin.H{
-			"success": false,
-			"error":   "Usuário não pertence a este tenant",
-		})
+		c.JSON(403, gin.H{"success": false, "error": "User does not belong to this tenant."})
 		return
 	}
 
