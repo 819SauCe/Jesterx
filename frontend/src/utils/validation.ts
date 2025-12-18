@@ -7,6 +7,14 @@ export interface ValidationResult {
   error?: string;
 }
 
+// Regex patterns for validation
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const UPPERCASE_REGEX = /[A-Z]/;
+const LOWERCASE_REGEX = /[a-z]/;
+const DIGIT_REGEX = /[0-9]/;
+// Special characters allowed in passwords
+const SPECIAL_CHAR_REGEX = /[!@#$%^&*()_+\-=[\]{}:,.?]/;
+
 /**
  * Validates an email address
  */
@@ -15,8 +23,7 @@ export function validateEmail(email: string): ValidationResult {
     return { isValid: false, error: 'Email is required' };
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
+  if (!EMAIL_REGEX.test(email)) {
     return { isValid: false, error: 'Invalid email format' };
   }
 
@@ -35,19 +42,19 @@ export function validatePassword(password: string): ValidationResult {
     return { isValid: false, error: 'Password must be at least 8 characters' };
   }
 
-  if (!/[A-Z]/.test(password)) {
+  if (!UPPERCASE_REGEX.test(password)) {
     return { isValid: false, error: 'Password must contain at least one uppercase letter' };
   }
 
-  if (!/[a-z]/.test(password)) {
+  if (!LOWERCASE_REGEX.test(password)) {
     return { isValid: false, error: 'Password must contain at least one lowercase letter' };
   }
 
-  if (!/[0-9]/.test(password)) {
+  if (!DIGIT_REGEX.test(password)) {
     return { isValid: false, error: 'Password must contain at least one number' };
   }
 
-  if (!/[!@#$%^&*()_+\-=\[\]{}:,.?]/.test(password)) {
+  if (!SPECIAL_CHAR_REGEX.test(password)) {
     return { isValid: false, error: 'Password must contain at least one special character' };
   }
 
