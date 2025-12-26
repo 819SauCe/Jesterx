@@ -140,6 +140,8 @@ For local development:
 3. Commit your changes
 4. Open a Pull Request
 
+If in doubt, check the <a href="./CONTRIBUTING.md">CONTRIBUTING.md</a>
+
 ## License
 
 This project is licensed under the terms of the file <a href="LICENSE.md">LICENSE.md</a>
