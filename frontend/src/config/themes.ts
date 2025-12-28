@@ -10,8 +10,11 @@ export type CommunityTheme = {
   previewHtml: string;
 };
 
+const ACCENT_PATTERN = /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{4}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
+const DEFAULT_ACCENT = "#ff3e00";
+
 function buildTemplate(accent: string, title: string, subtitle: string, cta: string, extra?: string) {
-  const safeAccent = /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{4}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/.test(accent) ? accent : "#ff3e00";
+  const safeAccent = ACCENT_PATTERN.test(accent) ? accent : DEFAULT_ACCENT;
   return `
   <style>
     :root {
