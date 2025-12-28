@@ -2,7 +2,7 @@ package middlewares
 
 import (
 	"database/sql"
-	"gen-you-ecommerce/config"
+	"jesterx-core/config"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

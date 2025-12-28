@@ -2,7 +2,7 @@ package helpers
 
 import (
 	"database/sql"
-	"gen-you-ecommerce/config"
+	"jesterx-core/config"
 )
 
 func UserHasTenantAccess(userID, tenantID string) (bool, string, error) {

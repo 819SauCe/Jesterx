@@ -23,10 +23,10 @@ const pageTypes: PageType[] = [
 
 type CreatePageFormProps = {
   onClose: () => void;
-  onSelectType?: (type: string) => void;
+  onSuccess?: () => void;
 };
 
-export function CreatePageForm({ onClose, onSelectType }: CreatePageFormProps) {
+export function CreatePageForm({ onClose, onSuccess }: CreatePageFormProps) {
   const navigate = useNavigate();
   const [storeType, setStoreType] = useState<string>("");
   const [step, setStep] = useState<"choose" | "details">("choose");
@@ -41,7 +41,6 @@ export function CreatePageForm({ onClose, onSelectType }: CreatePageFormProps) {
 
   function handleSelectType(type: string) {
     setStoreType(type);
-    onSelectType?.(type);
     setStep("details");
   }
 
@@ -68,12 +67,9 @@ export function CreatePageForm({ onClose, onSelectType }: CreatePageFormProps) {
       const response = await post("/v1/pages", payload);
 
       if (response) {
-        alert(`Página "${pageName}" criada com sucesso!`);
-        onClose();
-        window.location.reload();
+        onSuccess?.();
       }
     } catch (err: any) {
-      console.error("Erro ao criar página:", err);
       setError(err?.message || "Erro ao criar página");
     } finally {
       setLoading(false);
@@ -131,7 +127,7 @@ export function CreatePageForm({ onClose, onSelectType }: CreatePageFormProps) {
 
               <label className={styles.field}>
                 Domínio (opcional)
-                <input type="text" placeholder="ex: meusite.com. br" value={domain} onChange={(e) => setDomain(e.target.value)} disabled={loading} />
+                <input type="text" placeholder="ex: meusite.com.br" value={domain} onChange={(e) => setDomain(e.target.value)} disabled={loading} />
               </label>
 
               <label className={styles.field}>

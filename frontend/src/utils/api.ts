@@ -45,7 +45,16 @@ export async function apiRequest<T = any>(endpoint: string, options: RequestInit
 
   try {
     const response = await fetch(`${url}${endpoint}`, config);
-    const data = await response.json();
+    const text = await response.text();
+
+    let data: any = {};
+    if (text) {
+      try {
+        data = JSON.parse(text);
+      } catch {
+        data = {};
+      }
+    }
 
     if (!response.ok) {
       throw {
@@ -54,13 +63,20 @@ export async function apiRequest<T = any>(endpoint: string, options: RequestInit
       } as ApiError;
     }
 
-    return data;
+    if (!text) {
+      return {
+        success: true,
+        message: "",
+      } as ApiResponse<T>;
+    }
+
+    return data as ApiResponse<T>;
   } catch (error) {
     if ((error as ApiError).message) {
       throw error;
     }
     throw {
-      message: "Network error.  Please try again later.",
+      message: "Network error. Please try again later.",
     } as ApiError;
   }
 }

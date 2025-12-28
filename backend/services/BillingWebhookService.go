@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"database/sql"
 	"encoding/json"
-	"gen-you-ecommerce/config"
 	"io"
+	"jesterx-core/config"
 	"net/http"
 	"strings"
 

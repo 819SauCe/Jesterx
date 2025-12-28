@@ -1,9 +1,10 @@
 package main
 
 import (
-	"gen-you-ecommerce/config"
-	"gen-you-ecommerce/middlewares"
-	"gen-you-ecommerce/services"
+	"fmt"
+	"jesterx-core/config"
+	"jesterx-core/middlewares"
+	"jesterx-core/services"
 	"net/http"
 	"time"
 
@@ -14,13 +15,20 @@ import (
 
 func main() {
 	config.Load()
+
 	if config.GinMode == "release" || config.GinMode == "prod" {
 		gin.SetMode(gin.ReleaseMode)
+	}
+
+	ip, err := config.HostIP()
+	if err != nil {
+		panic(err)
 	}
 
 	config.ConnectPostgres()
 	config.ConnectMongo()
 	config.InitStripe()
+
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:3000", "http://localhost:5173"},
@@ -45,13 +53,25 @@ func main() {
 	router.PUT("/v1/pages/:page_id", middlewares.TenantMiddleware(), middlewares.AuthMiddleware(), services.UpdatePageService)
 	router.GET("/v1/pages", middlewares.TenantMiddleware(), middlewares.AuthMiddleware(), services.ListPagesService)
 	router.POST("/v1/pages", middlewares.TenantMiddleware(), middlewares.AuthMiddleware(), services.CreatePageService)
-	router.GET("/v1/pages/:page_id", services.GetPageService)
-	router.GET("/v1/pages/:page_id/raw", services.GetRawSveltePageService)
+	router.GET("/v1/pages/:page_id", middlewares.TenantMiddleware(), middlewares.AuthMiddleware(), services.GetPageService)
+	router.GET("/v1/pages/:page_id/raw", middlewares.TenantMiddleware(), middlewares.AuthMiddleware(), services.GetRawSveltePageService)
+	router.DELETE("/v1/pages/:page_id", middlewares.TenantMiddleware(), middlewares.AuthMiddleware(), services.DeletePageService)
+
+	// V1/THEMES
+	router.POST("/v1/themes/apply", middlewares.TenantMiddleware(), middlewares.AuthMiddleware(), services.ApplyThemeService)
 
 	// V1/BILLING
 	router.POST("/v1/billing/checkout", middlewares.AuthMiddleware(), services.CreateCheckoutService)
 	router.POST("/v1/billing/webhook", services.PaymentWebhookService)
 	router.POST("/v1/billing/confirm", middlewares.AuthMiddleware(), services.ConfirmCheckoutService)
 
-	http.ListenAndServe(":8080", router)
+	fmt.Print("\nYour api is running:\n\n")
+	fmt.Println("Bind address:", "0.0.0.0:"+config.ApplicationPort)
+	fmt.Println("LAN (same network): " + ip + ":" + config.ApplicationPort)
+	fmt.Println("Local (this machine): " + "http://localhost:" + config.ApplicationPort)
+	fmt.Println("Website: " + config.HostProd)
+
+	if err := http.ListenAndServe(":"+config.ApplicationPort, router); err != nil {
+		panic(err)
+	}
 }

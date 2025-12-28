@@ -1,11 +1,11 @@
 package services
 
 import (
-	"gen-you-ecommerce/config"
-	"gen-you-ecommerce/helpers"
-	"gen-you-ecommerce/models"
-	"gen-you-ecommerce/responses"
-	"gen-you-ecommerce/templates"
+	"jesterx-core/config"
+	"jesterx-core/helpers"
+	"jesterx-core/models"
+	"jesterx-core/responses"
+	"jesterx-core/templates"
 	"time"
 
 	"github.com/gin-gonic/gin"

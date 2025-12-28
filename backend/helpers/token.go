@@ -2,7 +2,7 @@ package helpers
 
 import (
 	"errors"
-	"gen-you-ecommerce/config"
+	"jesterx-core/config"
 	"time"
 
 	"github.com/gin-gonic/gin"

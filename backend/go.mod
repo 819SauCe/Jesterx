@@ -1,4 +1,4 @@
-module gen-you-ecommerce
+module jesterx-core
 
 go 1.25.3
 

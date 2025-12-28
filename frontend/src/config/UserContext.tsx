@@ -71,6 +71,46 @@ function clearCachedUser() {
   localStorage.removeItem("userPlan");
 }
 
+function clearAllCookies() {
+  if (typeof document === "undefined") return;
+  const raw = document.cookie;
+  if (!raw) return;
+  const cookies = raw.split(";");
+  for (const cookie of cookies) {
+    const parts = cookie.split("=");
+    const name = parts[0]?.trim();
+    if (!name) continue;
+    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+  }
+}
+
+function handleUnauthorized() {
+  let hadUser = false;
+  try {
+    if (typeof window !== "undefined" && window.localStorage) {
+      hadUser = !!localStorage.getItem("userId");
+    }
+  } catch {
+    hadUser = false;
+  }
+  clearCachedUser();
+  clearAllCookies();
+  if (hadUser && typeof window !== "undefined") {
+    window.location.reload();
+  }
+}
+
+if (typeof globalThis.fetch === "function") {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
+    const response = await originalFetch(input, init);
+    if (response.status === 401) {
+      handleUnauthorized();
+    }
+    return response;
+  };
+}
+
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | undefined>(undefined);
   const ran = useRef(false);
@@ -93,7 +133,6 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         });
 
         if (!res.ok) {
-          if (res.status === 401) clearCachedUser();
           setUser(null);
           return;
         }

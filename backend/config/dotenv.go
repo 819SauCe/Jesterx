@@ -15,11 +15,20 @@ var (
 	GinMode             string
 	StripeSecretKey     string
 	StripeWebhookSecret string
+	HostProd            string
+	ApplicationPort     string
 )
 
 func Load() {
 	_ = godotenv.Load("../.env")
 
+	//App
+	HostProd = mustGetenv("HOST_PROD")
+	JwtSecret = mustGetenv("JWT_SECRET")
+	GinMode = mustGetenv("GIN_MODE")
+	ApplicationPort = mustGetenv("APPLICATION_PORT")
+
+	//Postgres
 	postgresUser := mustGetenv("POSTGRES_USER")
 	postgresPassword := mustGetenv("POSTGRES_PASSWORD")
 	postgresDB := mustGetenv("POSTGRES_DB")
@@ -32,15 +41,13 @@ func Load() {
 		postgresUser, postgresPassword, postgresHost, postgresPort, postgresDB, postgresSSL,
 	)
 
+	//MongoDB
 	mongoUser := mustGetenv("MONGO_USER")
 	mongoPassword := mustGetenv("MONGO_PASSWORD")
 	mongoPort := mustGetenv("MONGO_PORT")
 	mongoHost := mustGetenv("MONGO_HOST")
 
 	MongoUri = fmt.Sprintf("mongodb://%s:%s@%s:%s", mongoUser, mongoPassword, mongoHost, mongoPort)
-
-	JwtSecret = mustGetenv("JWT_SECRET")
-	GinMode = mustGetenv("GIN_MODE")
 
 	StripeSecretKey = mustGetenv("STRIPE_API_SECRET")
 	StripeWebhookSecret = mustGetenv("STRIPE_WEBHOOK_SECRET")

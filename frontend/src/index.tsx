@@ -15,6 +15,8 @@ import { Products } from "./pages/Products";
 import { Pricing } from "./pages/Pricing";
 import { PaymentSuccess } from "./pages/PaymentSuccess";
 import { PaymentCancel } from "./pages/PaymentCancel";
+import { PagePreview } from "./pages/PagePreview";
+import { PageEdit } from "./pages/PageEdit";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
@@ -28,13 +30,16 @@ root.render(
         <Route path="*" element={<NotFound />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/pages" element={<Pages />} />
-        <Route path="/products" element={<Products />} />
+        <Route path="/pages" element={<ProtectedRoute> <Pages /> </ProtectedRoute>} />
+        <Route path="/products" element={<ProtectedRoute> <Products /> </ProtectedRoute>} />
         <Route path="/pricing" element={<Pricing />} />
-        <Route path="/payment-success" element={<PaymentSuccess />} />
-        <Route path="/payment-cancel" element={<PaymentCancel />} />
+        <Route path="/payment-success" element={<ProtectedRoute> <PaymentSuccess /> </ProtectedRoute>} />
+        <Route path="/payment-cancel" element={<ProtectedRoute> <PaymentCancel /> </ProtectedRoute>} />
+        <Route path="/pages/:pageId" element={<ProtectedRoute> <PagePreview /> </ProtectedRoute>} />
+        <Route path="/pages/:pageId/edit" element={<ProtectedRoute> <PageEdit /> </ProtectedRoute>} />
       </Routes>
       <Footer />
+      <SpeedInsights />
     </UserProvider>
   </BrowserRouter>
 );

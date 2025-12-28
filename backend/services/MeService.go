@@ -1,8 +1,8 @@
 package services
 
 import (
-	"gen-you-ecommerce/helpers"
-	"gen-you-ecommerce/responses"
+	"jesterx-core/helpers"
+	"jesterx-core/responses"
 
 	"github.com/gin-gonic/gin"
 )

@@ -2,6 +2,7 @@ package config
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"time"
 
@@ -17,11 +18,14 @@ func ConnectMongo() {
 
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(MongoUri))
 	if err != nil {
-		log.Fatal("Error on connect to MongoDB: ", err)
+		log.Fatal("Error on MongoDB: ", err)
 	}
 
 	if err := client.Ping(ctx, nil); err != nil {
-		log.Fatal("MongoDB ping error: ", err)
+		fmt.Println("Error on connect in MongoDB")
+		fmt.Println("Try again in 5 seconds")
+		time.Sleep(time.Second * 5)
+		ConnectMongo()
 	}
 
 	MongoClient = client

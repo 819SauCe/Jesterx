@@ -2,8 +2,8 @@ package services
 
 import (
 	"database/sql"
-	"gen-you-ecommerce/config"
-	"gen-you-ecommerce/helpers"
+	"jesterx-core/config"
+	"jesterx-core/helpers"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
