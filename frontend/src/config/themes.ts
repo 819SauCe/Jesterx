@@ -12,6 +12,8 @@ export type CommunityTheme = {
 
 const ACCENT_PATTERN = /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{4}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
 const DEFAULT_ACCENT = "#ff3e00";
+const PAGE_BG = "#0f172a";
+const MUTED_COLOR = "#e2e8f0";
 
 function buildTemplate(accent: string, title: string, subtitle: string, cta: string, extra?: string) {
   const safeAccent = ACCENT_PATTERN.test(accent) ? accent : DEFAULT_ACCENT;
@@ -19,8 +21,8 @@ function buildTemplate(accent: string, title: string, subtitle: string, cta: str
   <style>
     :root {
       --accent: ${safeAccent};
-      --bg: #0f172a;
-      --muted: #e2e8f0;
+      --bg: ${PAGE_BG};
+      --muted: ${MUTED_COLOR};
     }
     * { box-sizing: border-box; }
     body {

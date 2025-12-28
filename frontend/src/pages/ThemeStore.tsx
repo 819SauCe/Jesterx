@@ -102,6 +102,7 @@ export function ThemeStore() {
         {communityThemes.map((theme) => (
           <article key={theme.id} className={styles.card} style={{ borderColor: theme.accent }}>
             <div className={styles.preview}>
+              {/* Scripts/forms allowed to render interactive theme previews */}
               <iframe title={theme.name} sandbox="allow-same-origin allow-scripts allow-forms" srcDoc={theme.previewHtml} />
               <span className={styles.tag}>{theme.author}</span>
             </div>

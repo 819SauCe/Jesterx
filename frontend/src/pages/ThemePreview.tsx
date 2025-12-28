@@ -123,6 +123,7 @@ export function ThemePreviewPage() {
           </div>
         </div>
         <div className={styles.previewFrame}>
+          {/* Scripts/forms allowed to render interactive theme previews */}
           <iframe title={theme.name} sandbox="allow-same-origin allow-scripts allow-forms" srcDoc={theme.previewHtml} />
         </div>
       </div>
